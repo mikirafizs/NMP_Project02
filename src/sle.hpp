@@ -1,9 +1,10 @@
-#ifndef SLE.HPP
-#define SLE.HPP
+#ifndef SLE_HPP
+#define SLE_HPP
 #include <lapacke.h>
 #include <vector>
 #include <cmath>
 #include <iostream>
+#include <iomanip>
 
 struct Condition{
     double x; //location of node
@@ -11,8 +12,7 @@ struct Condition{
     double value; // value of the equation (right side)
 };
 
-inline void build_system(std::vector <Condition> cond, std::vector <double>& a, std::vector <double>& b){
-    const int n = cond.size();
+inline void build_system(std::vector <Condition> cond, std::vector <double>& a, std::vector <double>& b, std::size_t n){
     a.assign(n*n, 0.0);
     b.assign(n, 0.0);
 
@@ -32,28 +32,28 @@ inline void build_system(std::vector <Condition> cond, std::vector <double>& a, 
 inline void print_matrix(std::vector <double>& a){
     const size_t n = sqrt(a.size());
     for(size_t k = 0; k < n; k++){
+        std::cout<<"[ ";
         for(size_t i = 0; i < n; i++){
-            
+            std::cout<<std::setprecision(3)<<a[k*n+i]<<"    ";
         }
+        std::cout<<"]\n";
     }
 }
 
-inline double determinant_from_LU(std::vector <double>& a, std::vector <double>& ipiv){}
+inline double determinant_from_LU(std::vector <double>& a, std::vector <int32_t>& ipiv, std::size_t n){
 
-inline double solve(std::vector <double>&a, std::vector <double>&ipiv, std::vector <double>& coef, size_t n){
-    coef.assign(n, 0.0);
+    LAPACKE_dgetrf(LAPACK_ROW_MAJOR, n, n, &a[0], n, &ipiv[0]);
+    double det = 1.0;
+    size_t j = 0;
+    for(size_t i = 0; i < n; i++){
+        det*=a[i*n + j];
+        j++;    
+    }
+    return det;
+}
+
+inline double solve(std::vector <double>&a, std::vector <int>&ipiv, std::vector <double>& b, size_t n){
+    LAPACKE_dgetrs(LAPACK_ROW_MAJOR, 'N', n, 1, &a[0], n, &ipiv[0], &b[0], 1);
 }
 
 #endif
-
-
-/*
-std::vector<Condition> cond = {
-    {x0, 0,  0.0},
-    {x0, 1,  1.0},
-    {x1, 0,  1.0},
-    {x2, 0,  0.0},
-    {x3, 0, -1.0},
-    {x3, 1,  0.0},
-};
-*/
