@@ -52,7 +52,7 @@ inline double determinant_from_LU(std::vector <double>& a, std::vector <int32_t>
     return det;
 }
 
-inline double solve(std::vector <double>&a, std::vector <int>&ipiv, std::vector <double>& b, size_t n){
+inline void solve(std::vector <double>&a, std::vector <int>&ipiv, std::vector <double>& b, size_t n){
     LAPACKE_dgetrs(LAPACK_ROW_MAJOR, 'N', n, 1, &a[0], n, &ipiv[0], &b[0], 1);
 }
 
