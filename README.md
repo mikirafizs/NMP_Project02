@@ -35,7 +35,7 @@ From the `src/` directory:
 
     g++ -std=c++17 -O2 -Wall -Wextra main.cpp -o main -llapacke
 
-The program writes the norm files to `../data/`, so run it from `src/`
+The program writes the coefficient file to `../data/`, so run it from `src/`
 and make sure the `data/` directory exists.
 
 ## Plots
