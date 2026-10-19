@@ -40,6 +40,6 @@ and make sure the `data/` directory exists.
 
 ## Plots
 
-From the project root:
-
-    python3 plots/plot_norms.py data --output plots
+From the src catalogue:
+    
+    python3 ../plots/plot.py ../data/coefficients.csv --output ../plots/polynomial.png --overwrite
