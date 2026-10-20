@@ -22,7 +22,11 @@ inline void build_system(std::vector <Condition> cond, std::vector <double>& a, 
                 a[k*n+j] = pow(cond[k].x, j);
             }
             if(cond[k].deriv > 0){
-                a[k*n+j] = j*pow(cond[k].x, j-1);
+                if (j == 0) {
+                    a[k*n+j] = 0.0;
+                } else {
+                    a[k*n+j] = j * pow(cond[k].x, j-1);
+                }
             }
         }
         b[k] = cond[k].value;
@@ -34,7 +38,7 @@ inline void print_matrix(std::vector <double>& a){
     for(size_t k = 0; k < n; k++){
         std::cout<<"[ ";
         for(size_t i = 0; i < n; i++){
-            std::cout<<std::setprecision(3)<<a[k*n+i]<<"    ";
+            std::cout<< std::setw(6) << std::setprecision(3)<<a[k*n+i]<<"    ";
         }
         std::cout<<"]\n";
     }
@@ -44,11 +48,20 @@ inline double determinant_from_LU(std::vector <double>& a, std::vector <int32_t>
 
     LAPACKE_dgetrf(LAPACK_ROW_MAJOR, n, n, &a[0], n, &ipiv[0]);
     double det = 1.0;
-    size_t j = 0;
+    int swaps = 0;
+    
     for(size_t i = 0; i < n; i++){
-        det*=a[i*n + j];
-        j++;    
+        det *= a[i*n + i]; 
+
+        if(ipiv[i] != (int32_t)(i + 1)) {
+            swaps++;
+        }
     }
+
+    if(swaps % 2 != 0){
+        det = -det;
+    }
+    
     return det;
 }
 
