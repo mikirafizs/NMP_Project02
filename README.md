@@ -15,7 +15,7 @@ The purpouse of the project is to show implementations of techniques of solving 
 ## Requirements:
 - g++ with C++17 support (tested with GCC 15)
 - LAPACK (header `lapacke.h`, linked with `-llapacke`);
-  Ubuntu/Debian: `sudo apt install liblapack-dev`
+- Ubuntu/Debian: `sudo apt install liblapack-dev`
 - Python 3.8+ (tested with 3.14)
 - matplotlib: `sudo apt install python3-matplotlib` or `pip install matplotlib`
 
@@ -28,6 +28,7 @@ The purpouse of the project is to show implementations of techniques of solving 
 - Python: <3.14.4>
 - matplotlib: <3.10.7+dfsg1>
 - BLAS: OpenBLAS <0.3.32+ds-5>
+- LAPACK: liblapack3 <3.12.1>
 
 ## Build and run
 
