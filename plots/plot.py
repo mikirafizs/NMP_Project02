@@ -1,7 +1,4 @@
-#!/usr/bin/env python3
-"""Plot the 5th-degree polynomial from coefficients written by main.cpp."""
 from __future__ import annotations
-
 import argparse
 from pathlib import Path
 import sys
@@ -48,7 +45,6 @@ def main() -> int:
         x = np.linspace(0.0, 3.0, 400)
         f = sum(a[i] * x**i for i in range(len(a)))
 
-        # węzły i wartości z warunków (2)-(7): f(0)=0, f(1)=1, f(2)=0, f(3)=-1
         nodes_x = [0, 1, 2, 3]
         nodes_y = [0, 1, 0, -1]
 
